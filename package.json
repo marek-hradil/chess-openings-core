@@ -1,0 +1,25 @@
+{
+    "name": "chess-openings-core",
+    "author": {
+      "name": "Marek Hradil jr."
+    },
+    "scripts": {
+      "build": "tsc"
+    },
+    "description": "Configurable chess GUI engine",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+      "/dist"
+    ],
+    "private": true,
+    "dependencies": {
+      "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+      "@types/uuid": "^8.3.0",
+      "typescript": "^4.1.5"
+    }
+  }
+  
