@@ -1,5 +1,5 @@
-import { NotationConverter } from '../../Converters'
 import { MoveEvent } from '../Rules/MovementRule'
+import { NotationConverter } from '../../Converters'
 import BoardTimeRecord from './BoardTimeRecord'
 
 class BoardTimeEventConverter {
@@ -81,14 +81,14 @@ class BoardTimeEventConverter {
       return false
     }
 
-    const [{ from, to }] = events
+    const [move] = events
 
-    if (!from || !to) {
+    if (!move?.from || !move?.to) {
       return false
     }
 
-    const [fromRow] = NotationConverter.fromNotation(from)
-    const [toRow] = NotationConverter.fromNotation(to)
+    const [fromRow] = NotationConverter.fromNotation(move.from)
+    const [toRow] = NotationConverter.fromNotation(move.to)
 
     return Math.abs(fromRow - toRow) === 2
   }

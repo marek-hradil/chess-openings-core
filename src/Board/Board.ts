@@ -1,8 +1,8 @@
-import BoardSingletonFactory from './BoardSingletonFactory'
 import BoardConfig, { BoardConfigOptions } from './Config/BoardConfig'
 import BoardGui from './Gui/BoardGui'
 import BoardRenderer from './Renderer/BoardRenderer'
 import BoardRules from './Rules/BoardRules'
+import BoardSingletonFactory from './BoardSingletonFactory'
 import BoardState from './State/BoardState'
 import BoardTime from './Time/BoardTime'
 

@@ -1,16 +1,16 @@
 import { FigureColor, FigureName } from './Figure'
 
 export class FigureVisuals {
-  private spriteX: number = 0
-  private spriteY: number = 0
-  private spriteHeight: number = 45
-  private spriteWidth: number = 45
+  private spriteX = 0
+  private spriteY = 0
+  private spriteHeight = 45
+  private spriteWidth = 45
 
   constructor(name: FigureName, color: FigureColor) {
     const [x, y] = this.setSpriteCoordinates(name, color)
 
-    this.spriteX = x
-    this.spriteY = y
+    this.spriteX = x ?? 0
+    this.spriteY = y ?? 0
   }
 
   public serialize() {

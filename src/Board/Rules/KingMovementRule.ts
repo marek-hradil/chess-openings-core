@@ -4,23 +4,23 @@ import {
   NotationConverter,
   PositionConverter,
 } from '../../Converters'
-import BoardState from '../State/BoardState'
-import BoardHistory from '../Time/BoardHistory'
-import BoardTimeRecord from '../Time/BoardTimeRecord'
-import BoardRules from './BoardRules'
 import { SimpleMovementRule } from './MovementRule'
+import BoardHistory from '../Time/BoardHistory'
+import BoardRules from './BoardRules'
+import BoardState from '../State/BoardState'
+import BoardTimeRecord from '../Time/BoardTimeRecord'
 
 export class KingMovementRule extends SimpleMovementRule {
   public make(state: BoardState, from: string, to: string) {
     const length = LengthConverter.measureLengthOfMove(from, to)
-    const figure = state.getFieldByNotation(from).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
 
     if (!figure) {
       return []
     }
 
     if (length !== 2) {
-      const attackedFigure = state.getFieldByNotation(to).getFigure()
+      const attackedFigure = state.getFieldByNotation(to)?.getFigure()
 
       if (attackedFigure) {
         return [
@@ -54,12 +54,16 @@ export class KingMovementRule extends SimpleMovementRule {
       ? 'd1'
       : 'd8'
 
-    const rookFigure = state.getFieldByNotation(rookPosition).getFigure()!
+    const rookFigure = state.getFieldByNotation(rookPosition)?.getFigure()
 
-    return [
-      { from, to, figure },
-      { from: rookPosition, to: rookDesignatedPosition, figure: rookFigure },
-    ]
+    if (rookFigure) {
+      return [
+        { from, to, figure },
+        { from: rookPosition, to: rookDesignatedPosition, figure: rookFigure },
+      ]
+    }
+
+    return []
   }
 
   public canAttackTo(_: BoardState, from: string): string[] {
@@ -81,7 +85,7 @@ export class KingMovementRule extends SimpleMovementRule {
     history: BoardHistory,
     rules: BoardRules
   ): string[] {
-    const figure = state.getFieldByNotation(from).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
     if (!figure) {
       return []
     }
@@ -113,7 +117,7 @@ export class KingMovementRule extends SimpleMovementRule {
         if (acc[move.id]) {
           return {
             ...acc,
-            [move.id]: [...acc[move.id], move],
+            [move.id]: [...(acc[move.id] ?? []), move],
           }
         } else {
           return {
@@ -141,7 +145,7 @@ export class KingMovementRule extends SimpleMovementRule {
     const canCastle = (acc: boolean, position: string, index: number, arr: string[]) => {
       const isRookField = index === arr.length - 1
       const isCheckableField = arr.length === 4 && index === 2
-      const isFree = !state.getFieldByNotation(position).getFigure()
+      const isFree = !state.getFieldByNotation(position)?.getFigure()
       const isAttacked = rules.isAttacked(
         state,
         position,
@@ -156,7 +160,7 @@ export class KingMovementRule extends SimpleMovementRule {
         return acc && isFree && !isAttacked
       }
 
-      const rookId = state.getFieldByNotation(position).getFigure()?.getId()
+      const rookId = state.getFieldByNotation(position)?.getFigure()?.getId()
       if (!rookId) {
         return false
       }
@@ -170,11 +174,11 @@ export class KingMovementRule extends SimpleMovementRule {
     const canLongCastle = longCastlePathway.reduce<boolean>(canCastle, true)
 
     const castleMoves = []
-    if (canShortCastle) {
+    if (canShortCastle && shortCastlePathway[1]) {
       castleMoves.push(shortCastlePathway[1])
     }
 
-    if (canLongCastle) {
+    if (canLongCastle && longCastlePathway[1]) {
       castleMoves.push(longCastlePathway[1])
     }
 

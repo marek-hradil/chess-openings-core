@@ -1,9 +1,9 @@
 import { ColorConverter } from '../../Converters'
-import BoardEventListeners from '../Config/BoardEventListeners'
-import BoardTimeConfig from '../Config/BoardTimeConfig'
 import { MoveEvent } from '../Rules/MovementRule'
+import BoardEventListeners from '../Config/BoardEventListeners'
 import BoardHistory from './BoardHistory'
 import BoardPlan from './BoardPlan'
+import BoardTimeConfig from '../Config/BoardTimeConfig'
 import BoardTimeEventConverter from './BoardTimeEventConverter'
 import BoardTimeRecord from './BoardTimeRecord'
 

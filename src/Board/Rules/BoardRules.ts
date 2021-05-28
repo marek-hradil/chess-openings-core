@@ -1,11 +1,11 @@
-import { FigureColor } from '../../Figure/Figure'
-import BoardState, { BoardStatePrototypeFactory } from '../State/BoardState'
 import { ColorConverter, NotationConverter } from '../../Converters'
-import BoardTime from '../Time/BoardTime'
-import BoardEventListeners from '../Config/BoardEventListeners'
-import BoardSwitches from '../Config/BoardSwitches'
+import { FigureColor } from '../../Figure/Figure'
 import BoardData from '../Config/BoardData'
+import BoardEventListeners from '../Config/BoardEventListeners'
 import BoardRulesConfig from '../Config/BoardRulesConfig'
+import BoardState, { BoardStatePrototypeFactory } from '../State/BoardState'
+import BoardSwitches from '../Config/BoardSwitches'
+import BoardTime from '../Time/BoardTime'
 
 class BoardRules {
   private listeners: BoardEventListeners
@@ -20,13 +20,13 @@ class BoardRules {
 
   public setup(state: BoardState) {
     for (const [position, figure] of Object.entries(this.data.layout)) {
-      state.getFieldByNotation(position).setFigure(figure)
+      state.getFieldByNotation(position)?.setFigure(figure)
     }
   }
 
   public move(from: string, to: string, state: BoardState, time: BoardTime, rules: BoardRules) {
     const field = state.getFieldByNotation(from)
-    const figure = field.getFigure()
+    const figure = field?.getFigure()
     if (!figure) {
       return
     }
@@ -47,16 +47,16 @@ class BoardRules {
 
     for (const event of events) {
       if (!event.from && event.to) {
-        state.getFieldByNotation(event.to).setFigure(event.figure)
+        state.getFieldByNotation(event.to)?.setFigure(event.figure)
       }
 
       if (event.from && !event.to) {
-        state.getFieldByNotation(event.from).setFigure(null)
+        state.getFieldByNotation(event.from)?.setFigure(null)
       }
 
       if (event.from && event.to) {
-        state.getFieldByNotation(event.from).setFigure(null)
-        state.getFieldByNotation(event.to).setFigure(event.figure)
+        state.getFieldByNotation(event.from)?.setFigure(null)
+        state.getFieldByNotation(event.to)?.setFigure(event.figure)
       }
     }
 
@@ -78,7 +78,7 @@ class BoardRules {
    */
   public getAttackablesForField(from: string, state: BoardState) {
     const field = state.getFieldByNotation(from)
-    const figure = field.getFigure()
+    const figure = field?.getFigure()
     if (!figure) {
       return []
     }
@@ -94,7 +94,7 @@ class BoardRules {
    */
   public getMovablesForField(from: string, state: BoardState, time: BoardTime, rules: BoardRules) {
     const field = state.getFieldByNotation(from)
-    const figure = field.getFigure()
+    const figure = field?.getFigure()
     if (!figure) {
       return []
     }
@@ -114,10 +114,10 @@ class BoardRules {
     for (const to of positions) {
       const prototype = BoardStatePrototypeFactory.clone(state)
 
-      const capturableFigure = prototype.getFieldByNotation(to).getFigure()
+      const capturableFigure = prototype.getFieldByNotation(to)?.getFigure() ?? null
 
-      prototype.getFieldByNotation(from).setFigure(null)
-      prototype.getFieldByNotation(to).setFigure(figure)
+      prototype.getFieldByNotation(from)?.setFigure(null)
+      prototype.getFieldByNotation(to)?.setFigure(figure)
 
       const isAttacked = this.isAttacked(
         prototype,
@@ -129,8 +129,8 @@ class BoardRules {
         notCheckPositions.push(to)
       }
 
-      prototype.getFieldByNotation(to).setFigure(capturableFigure)
-      prototype.getFieldByNotation(from).setFigure(figure)
+      prototype.getFieldByNotation(to)?.setFigure(capturableFigure)
+      prototype.getFieldByNotation(from)?.setFigure(figure)
     }
 
     return notCheckPositions
@@ -144,7 +144,7 @@ class BoardRules {
     const fields = state.getFields()
     for (const rowIndex in fields) {
       for (const colIndex in fields[rowIndex]) {
-        const attacker = fields[Number(rowIndex)][Number(colIndex)]?.getFigure()
+        const attacker = fields[Number(rowIndex)]?.[Number(colIndex)]?.getFigure()
         const notation = NotationConverter.toNotation(Number(rowIndex), Number(colIndex))
 
         if (notation && attacker && attacker.getColor() === byColor) {
@@ -186,7 +186,7 @@ class BoardRules {
       let moves = 0
       for (const rowIndex in fields) {
         for (const colIndex in fields[rowIndex]) {
-          const defender = fields[Number(rowIndex)][Number(colIndex)]?.getFigure()
+          const defender = fields[Number(rowIndex)]?.[Number(colIndex)]?.getFigure()
           const notation = NotationConverter.toNotation(Number(rowIndex), Number(colIndex))
 
           if (notation && defender && defender.getColor() === color) {

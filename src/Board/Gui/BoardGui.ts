@@ -34,7 +34,7 @@ class BoardGui {
 
     const field = state.getFieldByNotation(notation)
 
-    switch (field.getState()) {
+    switch (field?.getState()) {
       case FieldState.Idle:
         this.onClickIdle(notation, state, rules, time)
         break
@@ -48,7 +48,7 @@ class BoardGui {
   }
 
   private onClickIdle(position: string, state: BoardState, rules: BoardRules, time: BoardTime) {
-    const figure = state.getFieldByNotation(position).getFigure()
+    const figure = state.getFieldByNotation(position)?.getFigure()
     const lastMove = time.getHistory().getLastMove()
     const colorToPlay = lastMove ? ColorConverter.convert(lastMove.color) : 'White'
 
@@ -58,13 +58,13 @@ class BoardGui {
     }
 
     const start = state.getFieldByNotation(position)
-    start.setState(FieldState.Selected)
+    start?.setState(FieldState.Selected)
 
     const movablePositions = rules.getMovablesForField(position, state, time, rules)
 
     for (const movable of movablePositions) {
       const field = state.getFieldByNotation(movable)
-      field.setState(FieldState.Playable)
+      field?.setState(FieldState.Playable)
     }
 
     this.clear(state, [...movablePositions, position])
@@ -77,9 +77,9 @@ class BoardGui {
 
     start: for (const rowIndex in fields) {
       for (const colIndex in fields[rowIndex]) {
-        const field = fields[rowIndex][colIndex]
+        const field = fields?.[Number(rowIndex)]?.[Number(colIndex)]
 
-        if (field.getState() === FieldState.Selected) {
+        if (field?.getState() === FieldState.Selected) {
           selected = NotationConverter.toNotation(Number(rowIndex), Number(colIndex))
           break start
         }
@@ -104,9 +104,9 @@ class BoardGui {
       for (const colIndex in fields[rowIndex]) {
         const position = NotationConverter.toNotation(Number(rowIndex), Number(colIndex))
         if (position && !except.includes(position)) {
-          const field = fields[rowIndex][colIndex]
+          const field = fields?.[Number(rowIndex)]?.[Number(colIndex)]
 
-          field.setState(FieldState.Idle)
+          field?.setState(FieldState.Idle)
         }
       }
     }

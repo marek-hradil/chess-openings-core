@@ -1,6 +1,6 @@
-import BoardState from '../State/BoardState'
 import { IndexConverter } from '../../Converters'
 import BoardRendererConfig from '../Config/BoardRendererConfig'
+import BoardState from '../State/BoardState'
 
 export class BoardRenderer {
   private sprite: Promise<HTMLImageElement>
@@ -35,11 +35,13 @@ export class BoardRenderer {
     for (const rowIndex in fields) {
       const row = fields[rowIndex]
       for (const colIndex in row) {
-        const cell = row[colIndex]
-        const color = cell.getColor()
-        const figure = cell.getFigure()
+        const cell = row[Number(colIndex)]
+        const color = cell?.getColor()
+        const figure = cell?.getFigure()
 
-        this.context.fillStyle = color
+        if (color) {
+          this.context.fillStyle = color
+        }
 
         const coordinates = IndexConverter.fromIndex(
           Number(rowIndex),

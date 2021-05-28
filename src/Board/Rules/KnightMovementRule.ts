@@ -1,6 +1,6 @@
 import { PositionConverter } from '../../Converters'
-import BoardState from '../State/BoardState'
 import { SimpleMovementRule } from './MovementRule'
+import BoardState from '../State/BoardState'
 
 export class KnightMovementRule extends SimpleMovementRule {
   public canAttackTo(_: BoardState, from: string): string[] {

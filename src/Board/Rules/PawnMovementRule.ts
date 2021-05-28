@@ -1,13 +1,13 @@
 import { ColorConverter, NotationConverter, PositionConverter } from '../../Converters'
 import { Queen } from '../../Figure/Queen'
-import BoardState from '../State/BoardState'
-import BoardHistory from '../Time/BoardHistory'
 import { SimpleMovementRule } from './MovementRule'
+import BoardHistory from '../Time/BoardHistory'
+import BoardState from '../State/BoardState'
 
 export class PawnMovementRule extends SimpleMovementRule {
   public make(state: BoardState, from: string, to: string) {
-    const figure = state.getFieldByNotation(from).getFigure()
-    const attackedFigure = state.getFieldByNotation(to).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
+    const attackedFigure = state.getFieldByNotation(to)?.getFigure()
 
     if (!figure) {
       return []
@@ -45,7 +45,11 @@ export class PawnMovementRule extends SimpleMovementRule {
 
     const enPassantWhitePosition = PositionConverter.bottomNeighbour(to)
     if (figure.getColor() === 'White' && enPassantWhitePosition) {
-      const enPassantable = state.getFieldByNotation(enPassantWhitePosition).getFigure()!
+      const enPassantable = state.getFieldByNotation(enPassantWhitePosition)?.getFigure()
+      if (!enPassantable) {
+        return []
+      }
+
       return [
         { from, to, figure },
         { from: enPassantWhitePosition, to: null, figure: enPassantable },
@@ -54,7 +58,11 @@ export class PawnMovementRule extends SimpleMovementRule {
 
     const enPassantBlackPosition = PositionConverter.topNeighbour(to)
     if (figure.getColor() === 'Black' && enPassantBlackPosition) {
-      const enPassantable = state.getFieldByNotation(enPassantBlackPosition).getFigure()!
+      const enPassantable = state.getFieldByNotation(enPassantBlackPosition)?.getFigure()
+      if (!enPassantable) {
+        return []
+      }
+
       return [
         { from, to, figure },
         { from: enPassantBlackPosition, to: null, figure: enPassantable },
@@ -65,7 +73,7 @@ export class PawnMovementRule extends SimpleMovementRule {
   }
 
   public canAttackTo(state: BoardState, from: string): string[] {
-    const figure = state.getFieldByNotation(from).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
     if (!figure) {
       return []
     }
@@ -90,7 +98,7 @@ export class PawnMovementRule extends SimpleMovementRule {
   }
 
   public canMoveTo(state: BoardState, from: string, history: BoardHistory): string[] {
-    const figure = state.getFieldByNotation(from).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
     if (!figure) {
       return []
     }
@@ -107,18 +115,18 @@ export class PawnMovementRule extends SimpleMovementRule {
 
     const moves = []
     const forward = getForward(from)
-    if (forward && !state.getFieldByNotation(forward).getFigure()) {
+    if (forward && !state.getFieldByNotation(forward)?.getFigure()) {
       moves.push(forward)
     }
 
     const hasMoved = Boolean(history.filter({ id: figure.getId() }).length)
     const twoForward = forward && moves.includes(forward) && getForward(forward)
-    if (!hasMoved && twoForward && !state.getFieldByNotation(twoForward).getFigure()) {
+    if (!hasMoved && twoForward && !state.getFieldByNotation(twoForward)?.getFigure()) {
       moves.push(twoForward)
     }
 
     const canTake = (f: string) =>
-      state.getFieldByNotation(f).getFigure()?.getColor() ===
+      state.getFieldByNotation(f)?.getFigure()?.getColor() ===
       ColorConverter.convert(figure.getColor())
 
     const forwardLeft = getForwardLeft(from)

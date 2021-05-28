@@ -1,6 +1,6 @@
+import { LinearMovementRule } from './MovementRule'
 import { PositionConverter } from '../../Converters'
 import BoardState from '../State/BoardState'
-import { LinearMovementRule } from './MovementRule'
 
 export class RookMovementRule extends LinearMovementRule {
   public canAttackTo(state: BoardState, from: string): string[] {

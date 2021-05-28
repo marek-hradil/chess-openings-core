@@ -27,8 +27,8 @@ class BoardHistory {
     })
   }
 
-  public getLastMove(): BoardTimeRecord | null {
-    return this.moves[this.moves.length - 1]
+  public getLastMove() {
+    return this.moves[this.moves.length - 1] ?? null
   }
 
   public getMoveCount() {

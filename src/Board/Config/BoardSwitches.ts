@@ -6,8 +6,8 @@ export type BoardRulesSwitches = {
 type Switches = (BoardRulesSwitches & { type: 'BoardRules' }) | never
 
 class BoardSwitches {
-  public shouldEndOnPlanViolation: boolean = true
-  public shouldEnforcePlan: boolean = true
+  public shouldEndOnPlanViolation = true
+  public shouldEnforcePlan = true
 
   constructor(switches: Switches) {
     if (switches.type === 'BoardRules') {

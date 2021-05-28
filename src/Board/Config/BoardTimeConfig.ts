@@ -1,7 +1,7 @@
 import { FigureColor } from '../../Figure/Figure'
-import BoardTimeRecord from '../Time/BoardTimeRecord'
 import BoardData from './BoardData'
 import BoardEventListeners, { BoardTimeEventsListeners } from './BoardEventListeners'
+import BoardTimeRecord from '../Time/BoardTimeRecord'
 
 type PlanRecordSerialized = {
   from: ConstructorParameters<typeof BoardTimeRecord>['0']['0']

@@ -1,6 +1,6 @@
-import { NotationConverter } from '../../Converters'
 import { BlackField, Field, FieldState, WhiteField } from './BoardField'
 import { FigureColor } from '../../Figure/Figure'
+import { NotationConverter } from '../../Converters'
 import BoardStateConfig from '../Config/BoardStateConfig'
 
 class BoardState {
@@ -22,13 +22,13 @@ class BoardState {
     return this.fields
   }
 
-  public getFieldByNotation(notation: string): Field {
+  public getFieldByNotation(notation: string) {
     const [rowIndex, colIndex] = NotationConverter.fromNotation(notation)
 
     return this.getFieldByIndex(rowIndex, colIndex)
   }
 
-  public getFieldByIndex(rowIndex: number, colIndex: number): Field {
+  public getFieldByIndex(rowIndex: number, colIndex: number) {
     return this.fields?.[rowIndex]?.[colIndex] ?? null
   }
 
@@ -47,7 +47,12 @@ class BoardStateFigureSearch {
 
     start: for (const rowIndex in fields) {
       for (const colIndex in fields[rowIndex]) {
-        const field = fields[rowIndex][colIndex]
+        const field = fields?.[Number(rowIndex)]?.[Number(colIndex)]
+
+        if (!field) {
+          continue
+        }
+
         const figure = field.getFigure()
 
         if (!figure) {

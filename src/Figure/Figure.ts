@@ -1,5 +1,5 @@
-import { v4 as uuid } from 'uuid'
 import { FigureVisuals } from './FigureVisuals'
+import { v4 as uuid } from 'uuid'
 
 export type FigureColor = 'White' | 'Black'
 export type FigureName = 'King' | 'Queen' | 'Rook' | 'Bishop' | 'Knight' | 'Pawn'

@@ -1,24 +1,19 @@
+// https://robertcooper.me/post/using-eslint-and-prettier-in-a-typescript-project
 module.exports = {
-  // USE REACT-APP ESLINT INSTEAD ONE IN THE PACKAGE.JSON ->
-  // -> https://www.npmjs.com/package/eslint-config-react-app (but no real-time warnings)
-
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  parser: '@typescript-eslint/parser',
   extends: [
-    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    'plugin:react/recommended',
-    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    // "prettier/react", // NOT SURE?! WORKING? disables react-specific linting rules that conflict with prettier
-    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
+    ecmaVersion: 2020,
+    sourceType: 'module',
     ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
+      jsx: true,
     },
   },
   rules: {
-    semi: 'off',
     '@typescript-eslint/semi': ['error', 'never'],
     '@typescript-eslint/no-use-before-define': [
       'error',
@@ -30,15 +25,13 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/explicit-member-accessibility': 0,
+    semi: 'off',
+    eqeqeq: 'error',
     'arrow-parens': ['error', 'as-needed'],
     'no-use-before-define': ['error', { functions: false, classes: false, variables: false }],
     'prefer-arrow-callback': 1,
-    '@typescript-eslint/ban-ts-ignore': 0,
-    // because this rule is not working
-    // "@typescript-eslint/explicit-member-accessibility": [ { accessibility: "no-public", overrides: { properties: "explicit" } } ],
-    '@typescript-eslint/explicit-member-accessibility': 0,
-    // "comma-dangle": ["warn", "always-multiline"],
-    eqeqeq: 'error',
     'no-use-before-define': 0,
     'max-len': ['warn', { code: 100, ignoreComments: true, ignorePattern: '^import .*' }],
     'new-parens': 'error',
@@ -56,14 +49,6 @@ module.exports = {
       },
     ],
     'no-irregular-whitespace': 'warn',
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
   },
-  plugins: ['sort-imports-es6-autofix', 'react-hooks'],
-  ignorePatterns: ['__generated__/*'],
-  settings: {
-    react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
-    },
-  },
+  plugins: ['sort-imports-es6-autofix'],
 }

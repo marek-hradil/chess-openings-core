@@ -1,7 +1,7 @@
 import { Figure } from '../../Figure/Figure'
-import BoardState from '../State/BoardState'
 import BoardHistory from '../Time/BoardHistory'
 import BoardRules from './BoardRules'
+import BoardState from '../State/BoardState'
 
 export enum MovementRuleType {
   Linear = 'Linear',
@@ -17,8 +17,8 @@ export type MoveEvent = {
 export abstract class MovementRule {
   protected abstract type: MovementRuleType
   public make(state: BoardState, from: string, to: string): MoveEvent[] {
-    const figure = state.getFieldByNotation(from).getFigure()
-    const attackedFigure = state.getFieldByNotation(to).getFigure()
+    const figure = state.getFieldByNotation(from)?.getFigure()
+    const attackedFigure = state.getFieldByNotation(to)?.getFigure()
 
     if (!figure) {
       return []
@@ -64,8 +64,8 @@ export abstract class SimpleMovementRule extends MovementRule {
 
       const field = state.getFieldByNotation(position)
       if (
-        !field.getFigure() ||
-        field.getFigure()?.getColor() !== fromField.getFigure()?.getColor()
+        !field?.getFigure() ||
+        field?.getFigure()?.getColor() !== fromField?.getFigure()?.getColor()
       ) {
         movable.push(position)
       }
@@ -95,7 +95,11 @@ export abstract class LinearMovementRule extends MovementRule {
       field = position && state.getFieldByNotation(position)
     }
 
-    if (position && field && field.getFigure()?.getColor() !== startField.getFigure()?.getColor()) {
+    if (
+      position &&
+      field &&
+      field.getFigure()?.getColor() !== startField?.getFigure()?.getColor()
+    ) {
       moves.push(position)
     }
 

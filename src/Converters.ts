@@ -17,6 +17,10 @@ export class NotationConverter {
   public static fromNotation(notation: string): [rowIndex: number, colIndex: number] {
     const [colSign, rowSign] = notation.split('')
 
+    if (!rowSign || !colSign) {
+      return [0, 0]
+    }
+
     return [this.rowNotation.indexOf(rowSign), this.colNotation.indexOf(colSign)]
   }
 }
