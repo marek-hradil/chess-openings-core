@@ -11,6 +11,8 @@
     "allowJs": true,
     "checkJs": true,
     "importHelpers": true,
+    "declaration": true,
+    "outDir": ".",
     "downlevelIteration": true,
     "strict": true,
     "noUnusedLocals": true,
