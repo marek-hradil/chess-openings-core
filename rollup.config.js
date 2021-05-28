@@ -1,5 +1,5 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
 import filesize from 'rollup-plugin-filesize'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 import typescript from '@rollup/plugin-typescript'
@@ -14,7 +14,7 @@ export default {
     nodePolyfills(),
     nodeResolve({ browser: true, extensions: ['ts'] }),
     typescript({ tsconfig: './tsconfig.json', module: 'esnext' }),
-    commonjs(),
+    terser(),
     filesize(),
   ],
 }
