@@ -13,8 +13,8 @@ class Board {
   private time: BoardTime
   private renderer: BoardRenderer
 
-  constructor(options: BoardConfigOptions, canvas: HTMLCanvasElement) {
-    const factory = new BoardSingletonFactory(new BoardConfig(options))
+  constructor(canvas: HTMLCanvasElement, options?: BoardConfigOptions) {
+    const factory = new BoardSingletonFactory(new BoardConfig(options ?? {}))
 
     this.state = factory.makeState()
     this.rules = factory.makeRules()
@@ -35,5 +35,7 @@ class Board {
     this.renderer.render(this.state)
   }
 }
+
+export const createBoard = (args: ConstructorParameters<typeof Board>) => new Board(...args)
 
 export default Board

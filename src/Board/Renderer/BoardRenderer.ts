@@ -55,9 +55,11 @@ export class BoardRenderer {
           const visuals = figure.getVisuals().serialize()
           const context = this.context
 
-          this.sprite.then(sprite =>
-            context.drawImage(sprite, ...visuals, ...coordinates, ...squareSizes)
-          )
+          this.sprite
+            .then(sprite => context.drawImage(sprite, ...visuals, ...coordinates, ...squareSizes))
+            .catch(() =>
+              console.error(`Could not resolve figures path, please check if it is valid.`)
+            )
         }
       }
     }
