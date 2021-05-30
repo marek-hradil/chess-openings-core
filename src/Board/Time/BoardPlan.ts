@@ -21,12 +21,16 @@ class BoardPlan {
     return this.followablePlan[color ?? 'White'][Math.floor(moveCount / 2)] ?? null
   }
 
-  public listFollowablePlan(color: FigureColor, moveCount: number) {
-    return this.inevitablePlan[color].slice(Math.floor(moveCount / 2))
+  public listFollowablePlan(color: FigureColor | null, moveCount: number) {
+    return this.inevitablePlan[color ?? 'White'].slice(Math.floor(moveCount / 2))
   }
 
-  public listInevitablePlan(color: FigureColor, moveCount: number) {
-    return this.inevitablePlan[color].slice(Math.floor(moveCount / 2))
+  public listInevitablePlan(color: FigureColor | null, moveCount: number) {
+    return this.inevitablePlan[color ?? 'White'].slice(Math.floor(moveCount / 2))
+  }
+
+  public listFollowedPlan(color: FigureColor | null, moveCount: number) {
+    return this.inevitablePlan[color ?? 'White'].slice(0, Math.floor(moveCount / 2))
   }
 }
 

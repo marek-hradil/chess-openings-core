@@ -54,13 +54,13 @@ class BoardTime {
       this.listeners.onPlanContinuance(
         plannedMove,
         this.plan.listFollowablePlan(plannedMove.color, this.history.getMoveCount()),
-        this.history.filter({ color: plannedMove.color })
+        this.plan.listFollowedPlan(plannedMove.color, this.history.getMoveCount())
       )
     } else {
       this.listeners.onPlanViolation(
         plannedMove,
         this.plan.listFollowablePlan(plannedMove.color, this.history.getMoveCount()),
-        this.history.filter({ color: plannedMove.color })
+        this.plan.listFollowedPlan(plannedMove.color, this.history.getMoveCount())
       )
     }
 

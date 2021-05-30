@@ -6,7 +6,8 @@ declare class BoardPlan {
     constructor(followablePlan?: BoardPlan['followablePlan'], inevitablePlan?: BoardPlan['inevitablePlan']);
     getNextInevitablePlan(color: FigureColor | null, moveCount: number): BoardTimeRecord | null;
     getNextFollowingPlan(color: FigureColor | null, moveCount: number): BoardTimeRecord | null;
-    listFollowablePlan(color: FigureColor, moveCount: number): BoardTimeRecord[];
-    listInevitablePlan(color: FigureColor, moveCount: number): BoardTimeRecord[];
+    listFollowablePlan(color: FigureColor | null, moveCount: number): BoardTimeRecord[];
+    listInevitablePlan(color: FigureColor | null, moveCount: number): BoardTimeRecord[];
+    listFollowedPlan(color: FigureColor | null, moveCount: number): BoardTimeRecord[];
 }
 export default BoardPlan;
