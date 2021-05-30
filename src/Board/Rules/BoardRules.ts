@@ -61,7 +61,7 @@ class BoardRules {
     }
 
     time.move(move)
-    this.listeners.onMove(move)
+    this.listeners.onMove(move, time.getHistory().list())
 
     if (this.isCheckmate(state, time, rules)) {
       this.listeners.onEnd(time.getHistory().getLastMove()?.color ?? 'White')

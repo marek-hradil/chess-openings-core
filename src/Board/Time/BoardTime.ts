@@ -51,9 +51,17 @@ class BoardTime {
 
     const equals = followingMove.equals(plannedMove)
     if (equals) {
-      this.listeners.onPlanContinuance(plannedMove)
+      this.listeners.onPlanContinuance(
+        plannedMove,
+        this.plan.listFollowablePlan(plannedMove.color, this.history.getMoveCount()),
+        this.history.filter({ color: plannedMove.color })
+      )
     } else {
-      this.listeners.onPlanViolation(plannedMove, followingMove)
+      this.listeners.onPlanViolation(
+        plannedMove,
+        this.plan.listFollowablePlan(plannedMove.color, this.history.getMoveCount()),
+        this.history.filter({ color: plannedMove.color })
+      )
     }
 
     return equals

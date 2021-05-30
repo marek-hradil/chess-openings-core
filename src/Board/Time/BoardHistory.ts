@@ -8,6 +8,10 @@ class BoardHistory {
     this.moves.push(move)
   }
 
+  public list() {
+    return this.moves
+  }
+
   public filter({ color, name, id }: { color?: FigureColor; name?: FigureName; id?: string }) {
     return this.moves.filter(move => {
       let acceptable = true

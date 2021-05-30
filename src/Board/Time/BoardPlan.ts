@@ -13,12 +13,20 @@ class BoardPlan {
     this.inevitablePlan = inevitablePlan ?? { White: [], Black: [] }
   }
 
-  public getNextInevitablePlan(moveColor: FigureColor | null, moveCount: number) {
-    return this.inevitablePlan[moveColor ?? 'White'][Math.floor(moveCount / 2)] ?? null
+  public getNextInevitablePlan(color: FigureColor | null, moveCount: number) {
+    return this.inevitablePlan[color ?? 'White'][Math.floor(moveCount / 2)] ?? null
   }
 
-  public getNextFollowingPlan(moveColor: FigureColor | null, moveCount: number) {
-    return this.followablePlan[moveColor ?? 'White'][Math.floor(moveCount / 2)] ?? null
+  public getNextFollowingPlan(color: FigureColor | null, moveCount: number) {
+    return this.followablePlan[color ?? 'White'][Math.floor(moveCount / 2)] ?? null
+  }
+
+  public listFollowablePlan(color: FigureColor, moveCount: number) {
+    return this.inevitablePlan[color].slice(Math.floor(moveCount / 2))
+  }
+
+  public listInevitablePlan(color: FigureColor, moveCount: number) {
+    return this.inevitablePlan[color].slice(Math.floor(moveCount / 2))
   }
 }
 

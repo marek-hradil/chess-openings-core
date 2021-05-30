@@ -1,10 +1,19 @@
 import { FigureColor } from '../../Figure/Figure'
 import BoardTimeRecord from '../Time/BoardTimeRecord'
 
-type OnPlanViolation = (lastMove: BoardTimeRecord, shouldBeMove: BoardTimeRecord) => void
-type OnPlanContinuance = (lastMove: BoardTimeRecord) => void
+type OnPlanViolation = (
+  lastMove: BoardTimeRecord,
+  planLeft: BoardTimeRecord[],
+  planDone: BoardTimeRecord[]
+) => void
+type OnPlanContinuance = (
+  lastMove: BoardTimeRecord,
+  planLeft: BoardTimeRecord[],
+  planDone: BoardTimeRecord[]
+) => void
+
 type OnEnd = (won?: FigureColor) => void
-type OnMove = (lastMove: BoardTimeRecord) => void
+type OnMove = (lastMove: BoardTimeRecord, playedMoves: BoardTimeRecord[]) => void
 
 export type BoardTimeEventsListeners = {
   onPlanViolation?: OnPlanViolation
