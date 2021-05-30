@@ -61,6 +61,7 @@ class BoardRules {
     }
 
     time.move(move)
+    this.listeners.onMove(move)
 
     if (this.isCheckmate(state, time, rules)) {
       this.listeners.onEnd(time.getHistory().getLastMove()?.color ?? 'White')
