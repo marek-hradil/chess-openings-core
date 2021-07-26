@@ -4,6 +4,7 @@ export declare class BoardRenderer {
     private sprite;
     private context;
     private sizes;
+    private switches;
     constructor(config: BoardRendererConfig, canvas: HTMLCanvasElement);
     render(state: BoardState): void;
 }

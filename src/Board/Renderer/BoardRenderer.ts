@@ -1,11 +1,13 @@
 import { IndexConverter } from '../../Converters'
 import BoardRendererConfig from '../Config/BoardRendererConfig'
 import BoardState from '../State/BoardState'
+import BoardSwitches from '../Config/BoardSwitches'
 
 export class BoardRenderer {
   private sprite: Promise<HTMLImageElement>
   private context: CanvasRenderingContext2D | null = null
   private sizes: [width: number, height: number] = [0, 0]
+  private switches: BoardSwitches
 
   constructor(config: BoardRendererConfig, canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d')
@@ -21,6 +23,8 @@ export class BoardRenderer {
       this.context = context
       this.sizes = [canvas.width, canvas.height]
     }
+
+    this.switches = config.switches
   }
 
   public render(state: BoardState) {
@@ -44,8 +48,8 @@ export class BoardRenderer {
         }
 
         const coordinates = IndexConverter.fromIndex(
-          Number(rowIndex),
-          Number(colIndex),
+          this.switches.shouldRenderAsBlack ? (Number(rowIndex) + 7) % 7 : Number(rowIndex),
+          this.switches.shouldRenderAsBlack ? (Number(colIndex) + 7) % 7 : Number(colIndex),
           ...squareSizes
         )
 
