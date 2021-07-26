@@ -12,7 +12,7 @@ class BoardRendererConfig {
     })
     this.switches = new BoardSwitches({
       type: 'BoardRenderer',
-      shouldRenderAsBlack: false,
+      shouldRenderAsBlack: options?.shouldRenderAsBlack,
     })
   }
 }
