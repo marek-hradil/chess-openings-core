@@ -4,10 +4,10 @@ declare class BoardHistory {
     private moves;
     pushMove(move: BoardTimeRecord): void;
     list(): BoardTimeRecord[];
-    filter({ color, name, id }: {
+    filter({ color, name, startingPosition, }: {
         color?: FigureColor;
         name?: FigureName;
-        id?: string;
+        startingPosition?: string;
     }): BoardTimeRecord[];
     getLastMove(): BoardTimeRecord | null;
     getMoveCount(): number;

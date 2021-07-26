@@ -22,13 +22,13 @@ export class PawnMovementRule extends SimpleMovementRule {
         return [
           { from: to, to: null, figure: attackedFigure },
           { from, to: null, figure },
-          { from: null, to, figure: new Queen(figure.getColor()) },
+          { from: null, to, figure: new Queen(figure.getColor(), to) },
         ]
       }
 
       return [
         { from, to: null, figure },
-        { from: null, to, figure: new Queen(figure.getColor()) },
+        { from: null, to, figure: new Queen(figure.getColor(), to) },
       ]
     }
 
@@ -119,7 +119,9 @@ export class PawnMovementRule extends SimpleMovementRule {
       moves.push(forward)
     }
 
-    const hasMoved = Boolean(history.filter({ id: figure.getId() }).length)
+    const hasMoved = Boolean(
+      history.filter({ startingPosition: figure.getStartingPosition() }).length
+    )
     const twoForward = forward && moves.includes(forward) && getForward(forward)
     if (!hasMoved && twoForward && !state.getFieldByNotation(twoForward)?.getFigure()) {
       moves.push(twoForward)

@@ -20,7 +20,7 @@ class BoardTimeEventConverter {
       {
         color: mainMove?.figure?.getColor() ?? 'White',
         name: mainMove?.figure?.getName() ?? 'King',
-        id: mainMove?.figure?.getId() ?? null,
+        startingPosition: mainMove?.figure?.getStartingPosition() ?? 'a1',
       },
       specials
     )

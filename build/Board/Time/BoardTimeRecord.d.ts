@@ -4,7 +4,7 @@ declare class BoardTimeRecord {
     readonly toPosition: string | null;
     readonly color: FigureColor;
     readonly name: FigureName;
-    readonly id: string | null;
+    readonly startingPosition: string;
     readonly specials: {
         capture: boolean;
         pawnLongMove: boolean;
@@ -16,7 +16,7 @@ declare class BoardTimeRecord {
     constructor(positions: [from: string | null, to: string | null], figure: {
         color: FigureColor;
         name: FigureName;
-        id: string | null;
+        startingPosition: string;
     }, specials: Partial<BoardTimeRecord['specials']>);
     equals(record: BoardTimeRecord): boolean;
 }

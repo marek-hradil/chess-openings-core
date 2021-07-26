@@ -12,11 +12,19 @@ class BoardHistory {
     return this.moves
   }
 
-  public filter({ color, name, id }: { color?: FigureColor; name?: FigureName; id?: string }) {
+  public filter({
+    color,
+    name,
+    startingPosition,
+  }: {
+    color?: FigureColor
+    name?: FigureName
+    startingPosition?: string
+  }) {
     return this.moves.filter(move => {
       let acceptable = true
-      if (id) {
-        acceptable &&= move.id === id
+      if (startingPosition) {
+        acceptable &&= move.startingPosition === startingPosition
       }
 
       if (name) {

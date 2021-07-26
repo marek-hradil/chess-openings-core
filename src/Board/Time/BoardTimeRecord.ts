@@ -6,7 +6,7 @@ class BoardTimeRecord {
 
   public readonly color: FigureColor
   public readonly name: FigureName
-  public readonly id: string | null
+  public readonly startingPosition: string
 
   public readonly specials = {
     capture: false,
@@ -19,14 +19,14 @@ class BoardTimeRecord {
 
   constructor(
     positions: [from: string | null, to: string | null],
-    figure: { color: FigureColor; name: FigureName; id: string | null },
+    figure: { color: FigureColor; name: FigureName; startingPosition: string },
     specials: Partial<BoardTimeRecord['specials']>
   ) {
     this.fromPosition = positions[0]
     this.toPosition = positions[1]
     this.color = figure.color
     this.name = figure.name
-    this.id = figure.id
+    this.startingPosition = figure.startingPosition
 
     this.specials = {
       ...this.specials,

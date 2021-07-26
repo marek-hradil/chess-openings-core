@@ -17,7 +17,7 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
             } & Omit<{
                 color: import("../Figure/Figure").FigureColor;
                 name: import("../Figure/Figure").FigureName;
-                id: string | null;
+                startingPosition: string;
             }, "id"> & Partial<{
                 capture: boolean;
                 pawnLongMove: boolean;
@@ -32,7 +32,7 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
             } & Omit<{
                 color: import("../Figure/Figure").FigureColor;
                 name: import("../Figure/Figure").FigureName;
-                id: string | null;
+                startingPosition: string;
             }, "id"> & Partial<{
                 capture: boolean;
                 pawnLongMove: boolean;
@@ -49,7 +49,7 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
             } & Omit<{
                 color: import("../Figure/Figure").FigureColor;
                 name: import("../Figure/Figure").FigureName;
-                id: string | null;
+                startingPosition: string;
             }, "id"> & Partial<{
                 capture: boolean;
                 pawnLongMove: boolean;
@@ -64,7 +64,7 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
             } & Omit<{
                 color: import("../Figure/Figure").FigureColor;
                 name: import("../Figure/Figure").FigureName;
-                id: string | null;
+                startingPosition: string;
             }, "id"> & Partial<{
                 capture: boolean;
                 pawnLongMove: boolean;

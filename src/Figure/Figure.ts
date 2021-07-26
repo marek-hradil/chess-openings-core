@@ -1,17 +1,16 @@
 import { FigureVisuals } from './FigureVisuals'
-import { v4 as uuid } from 'uuid'
 
 export type FigureColor = 'White' | 'Black'
 export type FigureName = 'King' | 'Queen' | 'Rook' | 'Bishop' | 'Knight' | 'Pawn'
 
 export abstract class Figure {
-  private readonly id: string
+  private readonly startingPosition: string
   private readonly color: FigureColor
   private readonly name: FigureName
   private readonly visuals: FigureVisuals
 
-  constructor(name: FigureName, color: FigureColor) {
-    this.id = uuid()
+  constructor(name: FigureName, color: FigureColor, startingPosition: string) {
+    this.startingPosition = startingPosition
     this.name = name
     this.color = color
 
@@ -30,7 +29,7 @@ export abstract class Figure {
     return this.visuals
   }
 
-  public getId() {
-    return this.id
+  public getStartingPosition() {
+    return this.startingPosition
   }
 }

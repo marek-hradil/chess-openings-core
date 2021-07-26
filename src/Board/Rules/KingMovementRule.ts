@@ -101,7 +101,9 @@ export class KingMovementRule extends SimpleMovementRule {
       PositionConverter.rightNeighbour(from),
     ])
 
-    const didMove = Boolean(history.filter({ id: figure.getId() }).length)
+    const didMove = Boolean(
+      history.filter({ startingPosition: figure.getStartingPosition() }).length
+    )
     const isInCheck = rules.isAttacked(state, from, ColorConverter.convert(figure.getColor()))
     if (didMove || isInCheck) {
       return normalMoves
@@ -110,19 +112,15 @@ export class KingMovementRule extends SimpleMovementRule {
     const rooksMovesMap = history
       .filter({ name: 'Rook', color: figure.getColor() })
       .reduce<Record<string, BoardTimeRecord[]>>((acc, move) => {
-        if (!move.id) {
-          return acc
-        }
-
-        if (acc[move.id]) {
+        if (acc[move.startingPosition]) {
           return {
             ...acc,
-            [move.id]: [...(acc[move.id] ?? []), move],
+            [move.startingPosition]: [...(acc[move.startingPosition] ?? []), move],
           }
         } else {
           return {
             ...acc,
-            [move.id]: [move],
+            [move.startingPosition]: [move],
           }
         }
       }, {})
@@ -160,12 +158,16 @@ export class KingMovementRule extends SimpleMovementRule {
         return acc && isFree && !isAttacked
       }
 
-      const rookId = state.getFieldByNotation(position)?.getFigure()?.getId()
-      if (!rookId) {
+      const rookStartingPosition = state
+        .getFieldByNotation(position)
+        ?.getFigure()
+        ?.getStartingPosition()
+
+      if (!rookStartingPosition) {
         return false
       }
 
-      const didMove = Boolean(rooksMovesMap[rookId])
+      const didMove = Boolean(rooksMovesMap[rookStartingPosition])
 
       return acc && !didMove
     }
