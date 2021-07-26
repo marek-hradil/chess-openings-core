@@ -48,8 +48,8 @@ export class BoardRenderer {
         }
 
         const coordinates = IndexConverter.fromIndex(
-          this.switches.shouldRenderAsBlack ? (Number(rowIndex) + 7) % 7 : Number(rowIndex),
-          this.switches.shouldRenderAsBlack ? (Number(colIndex) + 7) % 7 : Number(colIndex),
+          this.switches.shouldRenderAsBlack ? Math.abs(Number(rowIndex) - 7) : Number(rowIndex),
+          this.switches.shouldRenderAsBlack ? Math.abs(Number(colIndex) - 7) : Number(colIndex),
           ...squareSizes
         )
 
