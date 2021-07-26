@@ -23,6 +23,7 @@ export declare type BoardTimeData = {
 };
 export declare type BoardRendererData = {
     figuresSpritePath?: string;
+    shouldRenderAsBlack?: boolean;
 };
 declare type DataConstructor = (BoardRulesData & {
     type: 'BoardRules';
@@ -52,6 +53,7 @@ declare class BoardData implements Data {
     fieldRows: number;
     fieldCols: number;
     figuresSpritePath: string;
+    shouldRenderAsBlack: boolean;
     inevitablePlan: {
         White: BoardTimeRecord[];
         Black: BoardTimeRecord[];

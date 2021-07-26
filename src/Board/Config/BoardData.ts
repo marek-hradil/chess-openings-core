@@ -31,6 +31,7 @@ export type BoardTimeData = {
 
 export type BoardRendererData = {
   figuresSpritePath?: string
+  shouldRenderAsBlack?: boolean
 }
 
 type DataConstructor =
@@ -97,6 +98,7 @@ class BoardData implements Data {
   public fieldCols = 8
 
   public figuresSpritePath = '/figures/sprite.svg'
+  public shouldRenderAsBlack = false
 
   public inevitablePlan = {
     White: new Array<BoardTimeRecord>(),
@@ -120,6 +122,7 @@ class BoardData implements Data {
 
     if (data.type === 'BoardRenderer') {
       this.figuresSpritePath = data.figuresSpritePath ?? '/figures/sprite.svg'
+      this.shouldRenderAsBlack = data.shouldRenderAsBlack ?? false
     }
 
     if (data.type === 'BoardTime') {
