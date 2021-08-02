@@ -29,7 +29,7 @@ export declare class PositionConverter {
 }
 export declare class IndexConverter {
     private static rotate;
-    static toIndex([x, y]: [x: number, y: number], [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number], shouldRotate?: boolean): number[] | readonly [number, number];
+    static toIndex([x, y]: [x: number, y: number], [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number], shouldRotate?: boolean): readonly [number, number];
     static fromIndex([rowIndex, colIndex]: [rowIndex: number, colIndex: number], [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number], shouldRotate?: boolean): readonly [number, number];
 }
 export declare class ColorConverter {

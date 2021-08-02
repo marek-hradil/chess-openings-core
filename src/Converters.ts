@@ -110,13 +110,13 @@ export class PositionConverter {
 
 export class IndexConverter {
   private static rotate([rowIndex, colIndex]: readonly [rowIndex: number, colIndex: number]) {
-    return [Math.abs(rowIndex - 7), Math.abs(colIndex - 7)]
+    return [Math.abs(rowIndex - 7), Math.abs(colIndex - 7)] as const
   }
 
   public static toIndex(
     [x, y]: [x: number, y: number],
     [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number],
-    shouldRotate?: boolean
+    shouldRotate = false
   ) {
     const result = [Math.floor(y / squareHeight), Math.floor(x / squareWidth)] as const
 
@@ -132,10 +132,11 @@ export class IndexConverter {
     [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number],
     shouldRotate = false
   ) {
-    return [
-      (shouldRotate ? Math.abs(colIndex - 7) : colIndex) * squareWidth,
-      (shouldRotate ? Math.abs(rowIndex - 7) : rowIndex) * squareHeight,
-    ] as const
+    const [cI, rI] = shouldRotate
+      ? IndexConverter.rotate([rowIndex, colIndex])
+      : [rowIndex, colIndex]
+
+    return [rI * squareWidth, cI * squareHeight] as const
   }
 }
 

@@ -6,7 +6,7 @@ class BoardGuiConfig {
 
   constructor(options?: BoardRendererData) {
     this.switches = new BoardSwitches({
-      type: 'BoardRenderer',
+      type: 'BoardGui',
       shouldRenderAsBlack: options?.shouldRenderAsBlack,
     })
   }
