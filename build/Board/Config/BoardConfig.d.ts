@@ -1,3 +1,4 @@
+import BoardGuiConfig from './BoardGuiConfig';
 import BoardRendererConfig from './BoardRendererConfig';
 import BoardRulesConfig from './BoardRulesConfig';
 import BoardStateConfig from './BoardStateConfig';
@@ -7,12 +8,14 @@ export declare type BoardConfigOptions = Partial<{
     time: ConstructorParameters<typeof BoardTimeConfig>[0];
     state: ConstructorParameters<typeof BoardStateConfig>[0];
     renderer: ConstructorParameters<typeof BoardRendererConfig>[0];
+    gui: ConstructorParameters<typeof BoardGuiConfig>[0];
 }>;
 declare class BoardConfig {
     rules: BoardRulesConfig;
     time: BoardTimeConfig;
     state: BoardStateConfig;
     renderer: BoardRendererConfig;
+    gui: BoardGuiConfig;
     constructor(options: BoardConfigOptions);
 }
 export default BoardConfig;

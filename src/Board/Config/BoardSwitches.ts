@@ -9,7 +9,7 @@ export type BoardRendererSwitches = {
 
 type Switches =
   | (BoardRulesSwitches & { type: 'BoardRules' })
-  | (BoardRendererSwitches & { type: 'BoardRenderer' })
+  | (BoardRendererSwitches & { type: 'BoardRenderer' | 'BoardGui' })
   | never
 
 class BoardSwitches {
@@ -23,7 +23,7 @@ class BoardSwitches {
       this.shouldEnforcePlan = switches?.shouldEnforcePlan ?? true
     }
 
-    if (switches.type === 'BoardRenderer') {
+    if (switches.type === 'BoardRenderer' || switches.type === 'BoardGui') {
       this.shouldRenderAsBlack = switches?.shouldRenderAsBlack ?? false
     }
   }

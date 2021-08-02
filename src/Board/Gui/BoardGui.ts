@@ -1,16 +1,20 @@
 import { ColorConverter, IndexConverter, NotationConverter } from '../../Converters'
 import { FieldState } from '../State/BoardField'
+import BoardGuiConfig from '../Config/BoardGuiConfig'
 import BoardRules from '../Rules/BoardRules'
 import BoardState from '../State/BoardState'
+import BoardSwitches from '../Config/BoardSwitches'
 import BoardTime from '../Time/BoardTime'
 
 class BoardGui {
   private canvasWidth: number
   private canvasHeight: number
+  private switches: BoardSwitches
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(config: BoardGuiConfig, canvas: HTMLCanvasElement) {
     this.canvasHeight = canvas.height
     this.canvasWidth = canvas.width
+    this.switches = config.switches
   }
 
   public onClick(
@@ -19,10 +23,11 @@ class BoardGui {
     rules: BoardRules,
     time: BoardTime
   ) {
-    const [rowIndex, colIndex] = IndexConverter.toIndex(coordinates, [
-      this.canvasWidth / 8,
-      this.canvasHeight / 8,
-    ])
+    const [rowIndex, colIndex] = IndexConverter.toIndex(
+      coordinates,
+      [this.canvasWidth / 8, this.canvasHeight / 8],
+      this.switches.shouldRenderAsBlack
+    )
 
     const notation = NotationConverter.toNotation(rowIndex, colIndex)
     if (!notation) {

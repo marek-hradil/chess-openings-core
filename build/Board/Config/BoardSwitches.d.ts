@@ -8,7 +8,7 @@ export declare type BoardRendererSwitches = {
 declare type Switches = (BoardRulesSwitches & {
     type: 'BoardRules';
 }) | (BoardRendererSwitches & {
-    type: 'BoardRenderer';
+    type: 'BoardRenderer' | 'BoardGui';
 }) | never;
 declare class BoardSwitches {
     shouldEndOnPlanViolation: boolean;

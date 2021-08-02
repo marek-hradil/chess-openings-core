@@ -43,7 +43,7 @@ class BoardSingletonFactory {
 
   public makeGui(canvas: HTMLCanvasElement) {
     if (!this.gui) {
-      return new BoardGui(canvas)
+      return new BoardGui(this.config.gui, canvas)
     }
 
     return this.gui

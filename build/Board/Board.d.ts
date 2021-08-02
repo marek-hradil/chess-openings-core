@@ -77,5 +77,6 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
     } & import("./Config/BoardEventListeners").BoardTimeEventsListeners) | undefined;
     state: import("./Config/BoardData").BoardStateData | undefined;
     renderer: import("./Config/BoardData").BoardRendererData | undefined;
+    gui: import("./Config/BoardData").BoardRendererData | undefined;
 }> | undefined]) => Board;
 export default Board;
