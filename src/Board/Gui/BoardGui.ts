@@ -19,13 +19,10 @@ class BoardGui {
     rules: BoardRules,
     time: BoardTime
   ) {
-    const [x, y] = coordinates
-    const [rowIndex, colIndex] = IndexConverter.toIndex(
-      x,
-      y,
+    const [rowIndex, colIndex] = IndexConverter.toIndex(coordinates, [
       this.canvasWidth / 8,
-      this.canvasHeight / 8
-    )
+      this.canvasHeight / 8,
+    ])
 
     const notation = NotationConverter.toNotation(rowIndex, colIndex)
     if (!notation) {

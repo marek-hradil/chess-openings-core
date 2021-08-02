@@ -109,22 +109,33 @@ export class PositionConverter {
 }
 
 export class IndexConverter {
+  private static rotate([rowIndex, colIndex]: readonly [rowIndex: number, colIndex: number]) {
+    return [Math.abs(rowIndex - 7), Math.abs(colIndex - 7)]
+  }
+
   public static toIndex(
-    x: number,
-    y: number,
-    squareWidth: number,
-    squareHeight: number
-  ): [rowIndex: number, colIndex: number] {
-    return [Math.floor(y / squareHeight), Math.floor(x / squareWidth)]
+    [x, y]: [x: number, y: number],
+    [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number],
+    shouldRotate?: boolean
+  ) {
+    const result = [Math.floor(y / squareHeight), Math.floor(x / squareWidth)] as const
+
+    if (!shouldRotate) {
+      return result
+    }
+
+    return IndexConverter.rotate(result)
   }
 
   public static fromIndex(
-    rowIndex: number,
-    colIndex: number,
-    squareWidth: number,
-    squareHeight: number
-  ): [x: number, y: number] {
-    return [colIndex * squareWidth, rowIndex * squareHeight]
+    [rowIndex, colIndex]: [rowIndex: number, colIndex: number],
+    [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number],
+    shouldRotate = false
+  ) {
+    return [
+      (shouldRotate ? Math.abs(colIndex - 7) : colIndex) * squareWidth,
+      (shouldRotate ? Math.abs(rowIndex - 7) : rowIndex) * squareHeight,
+    ] as const
   }
 }
 

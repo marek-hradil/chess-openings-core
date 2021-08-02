@@ -28,8 +28,9 @@ export declare class PositionConverter {
     private static useNotation;
 }
 export declare class IndexConverter {
-    static toIndex(x: number, y: number, squareWidth: number, squareHeight: number): [rowIndex: number, colIndex: number];
-    static fromIndex(rowIndex: number, colIndex: number, squareWidth: number, squareHeight: number): [x: number, y: number];
+    private static rotate;
+    static toIndex([x, y]: [x: number, y: number], [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number], shouldRotate?: boolean): number[] | readonly [number, number];
+    static fromIndex([rowIndex, colIndex]: [rowIndex: number, colIndex: number], [squareWidth, squareHeight]: [squareWidth: number, squareHeight: number], shouldRotate?: boolean): readonly [number, number];
 }
 export declare class ColorConverter {
     static convert(color: FigureColor): "White" | "Black";

@@ -33,7 +33,7 @@ export class BoardRenderer {
     }
 
     const [canvasWidth, canvasHeight] = this.sizes
-    const squareSizes = [canvasWidth / 8, canvasHeight / 8] as const
+    const squareSizes = [canvasWidth / 8, canvasHeight / 8] as [number, number]
     const fields = state.getFields()
 
     for (const rowIndex in fields) {
@@ -48,9 +48,9 @@ export class BoardRenderer {
         }
 
         const coordinates = IndexConverter.fromIndex(
-          this.switches.shouldRenderAsBlack ? Math.abs(Number(rowIndex) - 7) : Number(rowIndex),
-          this.switches.shouldRenderAsBlack ? Math.abs(Number(colIndex) - 7) : Number(colIndex),
-          ...squareSizes
+          [Number(rowIndex), Number(colIndex)],
+          squareSizes,
+          this.switches.shouldRenderAsBlack
         )
 
         this.context.fillRect(...coordinates, ...squareSizes)
