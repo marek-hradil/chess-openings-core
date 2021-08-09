@@ -5,14 +5,16 @@ import BoardRulesConfig from './BoardRulesConfig'
 import BoardStateConfig from './BoardStateConfig'
 import BoardTimeConfig from './BoardTimeConfig'
 
-export type BoardConfigOptions = Partial<{
-  rules: ConstructorParameters<typeof BoardRulesConfig>[0]
-  time: ConstructorParameters<typeof BoardTimeConfig>[0]
-  state: ConstructorParameters<typeof BoardStateConfig>[0]
-  renderer: ConstructorParameters<typeof BoardRendererConfig>[0]
-  gui: ConstructorParameters<typeof BoardGuiConfig>[0]
-  general: BoardGeneralData
-}>
+export type BoardConfigOptions = Readonly<
+  Partial<{
+    rules: ConstructorParameters<typeof BoardRulesConfig>[0]
+    time: ConstructorParameters<typeof BoardTimeConfig>[0]
+    state: ConstructorParameters<typeof BoardStateConfig>[0]
+    renderer: ConstructorParameters<typeof BoardRendererConfig>[0]
+    gui: ConstructorParameters<typeof BoardGuiConfig>[0]
+    general: BoardGeneralData
+  }>
+>
 
 class BoardConfig {
   public rules: BoardRulesConfig
