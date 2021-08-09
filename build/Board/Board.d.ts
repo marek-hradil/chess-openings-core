@@ -7,7 +7,7 @@ declare class Board {
     private renderer;
     constructor(canvas: HTMLCanvasElement, options?: BoardConfigOptions);
 }
-export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: Partial<{
+export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: Readonly<Partial<{
     rules: (import("./Config/BoardEventListeners").BoardRulesEventsListeners & import("./Config/BoardSwitches").BoardRulesSwitches & import("./Config/BoardData").BoardRulesData) | undefined;
     time: ({
         inevitablePlan?: {
@@ -79,5 +79,5 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: P
     renderer: (import("./Config/BoardData").BoardRendererData & import("./Config/BoardData").BoardGeneralData) | undefined;
     gui: import("./Config/BoardData").BoardGeneralData | undefined;
     general: import("./Config/BoardData").BoardGeneralData;
-}> | undefined]) => Board;
+}>> | undefined]) => Board;
 export default Board;
