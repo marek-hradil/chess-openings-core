@@ -5,7 +5,7 @@ import nodePolyfills from 'rollup-plugin-node-polyfills'
 import typescript from '@rollup/plugin-typescript'
 
 export default {
-  input: 'src/index.ts',
+  input: 'src/package/index.ts',
   output: {
     file: './build/index.js',
     format: 'esm',

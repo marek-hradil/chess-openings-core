@@ -1,1 +1,1 @@
-export * from './Board/Board'
+export * from './example'
