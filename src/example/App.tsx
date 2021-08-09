@@ -4,99 +4,55 @@ import { useEffect, useRef } from 'react'
 const practice = {
   plans: [
     {
-      name: "Queen's gambit",
-      color: 'White' as const,
-      followablePlan: {
-        White: [
-          {
-            from: 'd2',
-            to: 'd4',
-            color: 'White' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'd2' as const,
-          },
-          {
-            from: 'c2',
-            to: 'c4',
-            color: 'White' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'c2' as const,
-          },
-          {
-            from: 'c1',
-            to: 'g5',
-            color: 'White' as const,
-            name: 'Bishop' as const,
-            startingPosition: 'c1' as const,
-          },
-        ],
+      name: 'Dutch Defense',
+      color: 'Black' as const,
+      layout: [
+        { name: 'Rook' as const, color: 'White' as const, position: 'a1' },
+        { name: 'Knight' as const, color: 'White' as const, position: 'b1' },
+        { name: 'Bishop' as const, color: 'White' as const, position: 'c1' },
+        { name: 'King' as const, color: 'White' as const, position: 'e1' },
+        { name: 'Queen' as const, color: 'White' as const, position: 'd1' },
+        { name: 'Bishop' as const, color: 'White' as const, position: 'f1' },
+        { name: 'Knight' as const, color: 'White' as const, position: 'g1' },
+        { name: 'Rook' as const, color: 'White' as const, position: 'h1' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'a2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'b2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'c2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'd4', startingPosition: 'd2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'e2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'f2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'g2' },
+        { name: 'Pawn' as const, color: 'White' as const, position: 'h2' },
+        { name: 'Rook' as const, color: 'Black' as const, position: 'a8' },
+        { name: 'Knight' as const, color: 'Black' as const, position: 'b8' },
+        { name: 'Bishop' as const, color: 'Black' as const, position: 'c8' },
+        { name: 'Queen' as const, color: 'Black' as const, position: 'd8' },
+        { name: 'King' as const, color: 'Black' as const, position: 'e8' },
+        { name: 'Bishop' as const, color: 'Black' as const, position: 'f8' },
+        { name: 'Knight' as const, color: 'Black' as const, position: 'g8' },
+        { name: 'Rook' as const, color: 'Black' as const, position: 'h8' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'a7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'b7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'c7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'd7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'e7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'f7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'g7' },
+        { name: 'Pawn' as const, color: 'Black' as const, position: 'h7' },
+      ],
+      inevitablePlan: {
+        White: [],
         Black: [],
       },
-      inevitablePlan: {
+      followablePlan: {
         White: [],
         Black: [
           {
-            from: 'e7',
-            to: 'e5',
+            from: 'f7',
+            to: 'f5',
             color: 'Black' as const,
             name: 'Pawn' as const,
-            startingPosition: 'e7' as const,
-          },
-          {
-            from: 'g8',
-            to: 'f6',
-            color: 'Black' as const,
-            name: 'Knight' as const,
-            startingPosition: 'g8' as const,
-          },
-        ],
-      },
-    },
-    {
-      name: 'Sicilian Defense',
-      color: 'White' as const,
-      followablePlan: {
-        White: [
-          {
-            from: 'e2',
-            to: 'e4',
-            color: 'White' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'e2' as const,
-          },
-          {
-            from: 'g1',
-            to: 'f3',
-            color: 'White' as const,
-            name: 'Knight' as const,
-            startingPosition: 'g1' as const,
-          },
-          {
-            from: 'd2',
-            to: 'd4',
-            color: 'White' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'd2' as const,
-          },
-        ],
-        Black: [],
-      },
-      inevitablePlan: {
-        White: [],
-        Black: [
-          {
-            from: 'c7',
-            to: 'c5',
-            color: 'Black' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'c7' as const,
-          },
-          {
-            from: 'd7',
-            to: 'd6',
-            color: 'Black' as const,
-            name: 'Pawn' as const,
-            startingPosition: 'd7' as const,
+            startingPosition: 'f7',
           },
         ],
       },
@@ -117,6 +73,9 @@ const App = () => {
       {
         general: {
           startAs: practice.plans[0]?.color,
+        },
+        rules: {
+          layout: practice.plans[0]?.layout,
         },
         renderer: {
           figuresSpritePath: '/figures/sprite.svg',
