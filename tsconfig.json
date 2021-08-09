@@ -13,6 +13,7 @@
     "jsx": "react-jsx",
     "importHelpers": true,
     "declaration": true,
+    "rootDir": "src/package",
     "outDir": ".",
     "downlevelIteration": true,
     "strict": true,
@@ -31,7 +32,7 @@
     "noEmit": true
   },
   "include": [
-    "src"
+    "src/package"
   ],
   "exclude": [
     "node_modules",
