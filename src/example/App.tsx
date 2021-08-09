@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 const practice = {
   plans: [
     {
-      name: 'Dutch Defense',
+      name: 'Dutch Defense: Fianchetto, Semi-Leningrad Variation',
       color: 'Black' as const,
       layout: [
         { name: 'Rook' as const, color: 'White' as const, position: 'a1' },
@@ -41,7 +41,22 @@ const practice = {
         { name: 'Pawn' as const, color: 'Black' as const, position: 'h7' },
       ],
       inevitablePlan: {
-        White: [],
+        White: [
+          {
+            from: 'g2',
+            to: 'g3',
+            color: 'White' as const,
+            name: 'Pawn' as const,
+            startingPosition: 'g2',
+          },
+          {
+            from: 'f1',
+            to: 'g2',
+            color: 'White' as const,
+            name: 'Bishop' as const,
+            startingPosition: 'f1',
+          },
+        ],
         Black: [],
       },
       followablePlan: {
@@ -53,6 +68,20 @@ const practice = {
             color: 'Black' as const,
             name: 'Pawn' as const,
             startingPosition: 'f7',
+          },
+          {
+            from: 'g8',
+            to: 'f6',
+            color: 'Black' as const,
+            name: 'Knight' as const,
+            startingPosition: 'g8',
+          },
+          {
+            from: 'g7',
+            to: 'g6',
+            color: 'Black' as const,
+            name: 'Pawn' as const,
+            startingPosition: 'g7',
           },
         ],
       },

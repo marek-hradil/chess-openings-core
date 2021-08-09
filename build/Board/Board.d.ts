@@ -8,7 +8,14 @@ declare class Board {
     constructor(canvas: HTMLCanvasElement, options?: BoardConfigOptions);
 }
 export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: Readonly<Partial<{
-    rules: (import("./Config/BoardEventListeners").BoardRulesEventsListeners & import("./Config/BoardSwitches").BoardRulesSwitches & import("./Config/BoardData").BoardRulesData) | undefined;
+    rules: (import("./Config/BoardEventListeners").BoardRulesEventsListeners & import("./Config/BoardSwitches").BoardRulesSwitches & Omit<import("./Config/BoardData").BoardRulesData, "layout"> & {
+        layout?: {
+            name: import("../Figure/Figure").FigureName;
+            color: import("../Figure/Figure").FigureColor;
+            position: string;
+            startingPosition?: string | undefined;
+        }[] | undefined;
+    }) | undefined;
     time: ({
         inevitablePlan?: {
             White: ({
