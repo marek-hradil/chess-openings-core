@@ -17,7 +17,7 @@ class BoardPlan {
     return this.inevitablePlan[color ?? 'White'][Math.floor(moveCount / 2)] ?? null
   }
 
-  public getNextFollowingPlan(color: FigureColor | null, moveCount: number) {
+  public getNextFollowablePlan(color: FigureColor | null, moveCount: number) {
     return this.followablePlan[color ?? 'White'][Math.floor(moveCount / 2)] ?? null
   }
 

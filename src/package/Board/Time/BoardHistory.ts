@@ -39,8 +39,17 @@ class BoardHistory {
     })
   }
 
+  public getMove(historyShift: number) {
+    const index = this.getMoveCount() + historyShift
+    if (index < 0) {
+      return null
+    }
+
+    return this.moves[index] ?? null
+  }
+
   public getLastMove() {
-    return this.moves[this.moves.length - 1] ?? null
+    return this.getMove(-1)
   }
 
   public getMoveCount() {

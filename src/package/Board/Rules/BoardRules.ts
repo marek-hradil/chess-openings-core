@@ -1,5 +1,6 @@
 import { ColorConverter, NotationConverter } from '../../Converters'
 import { FigureColor } from '../../Figure/Figure'
+import { MoveEvent } from './MovementRule'
 import BoardData from '../Config/BoardData'
 import BoardEventListeners from '../Config/BoardEventListeners'
 import BoardRulesConfig from '../Config/BoardRulesConfig'
@@ -11,6 +12,8 @@ class BoardRules {
   private listeners: BoardEventListeners
   private switches: BoardSwitches
   private data: BoardData
+
+  private historyShift = 0
 
   constructor(config: BoardRulesConfig) {
     this.listeners = config.listeners
@@ -45,21 +48,7 @@ class BoardRules {
       return
     }
 
-    for (const event of events) {
-      if (!event.from && event.to) {
-        state.getFieldByNotation(event.to)?.setFigure(event.figure)
-      }
-
-      if (event.from && !event.to) {
-        state.getFieldByNotation(event.from)?.setFigure(null)
-      }
-
-      if (event.from && event.to) {
-        state.getFieldByNotation(event.from)?.setFigure(null)
-        state.getFieldByNotation(event.to)?.setFigure(event.figure)
-      }
-    }
-
+    this.applyEvents(state, events)
     time.move(move)
     this.listeners.onMove(move, time.getHistory().list())
 
@@ -72,6 +61,30 @@ class BoardRules {
     if (nextPlan) {
       this.move(nextPlan.fromPosition ?? '', nextPlan.toPosition ?? '', state, time, rules)
     }
+  }
+
+  public moveForwardsInHistory(state: BoardState, time: BoardTime) {
+    const history = time.getHistory()
+    const move = history.getMove(this.historyShift)
+
+    if (!move?.events?.length) {
+      return
+    }
+
+    this.historyShift += 1
+    this.applyEvents(state, move.events)
+  }
+
+  public moveBackwardsInHistory(state: BoardState, time: BoardTime) {
+    const history = time.getHistory()
+    const move = history.getMove(this.historyShift - 1)
+
+    if (!move?.events?.length) {
+      return
+    }
+
+    this.historyShift -= 1
+    this.deapplyEvents(state, move.events)
   }
 
   /**
@@ -202,6 +215,34 @@ class BoardRules {
     }
 
     return false
+  }
+
+  private applyEvents(state: BoardState, events: MoveEvent[]) {
+    for (const event of events) {
+      if (!event.from && event.to) {
+        state.getFieldByNotation(event.to)?.setFigure(event.figure)
+      }
+
+      if (event.from && !event.to) {
+        state.getFieldByNotation(event.from)?.setFigure(null)
+      }
+
+      if (event.from && event.to) {
+        state.getFieldByNotation(event.from)?.setFigure(null)
+        state.getFieldByNotation(event.to)?.setFigure(event.figure)
+      }
+    }
+  }
+
+  private deapplyEvents(state: BoardState, events: MoveEvent[]) {
+    return this.applyEvents(
+      state,
+      events.reverse().map(event => ({
+        from: event.to,
+        to: event.from,
+        figure: event.figure,
+      }))
+    )
   }
 }
 

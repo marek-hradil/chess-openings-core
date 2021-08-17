@@ -34,6 +34,16 @@ class Board {
     this.rules.setup(this.state)
     this.renderer.render(this.state)
   }
+
+  public moveForwardsInHistory() {
+    this.rules.moveForwardsInHistory(this.state, this.time)
+    this.renderer.render(this.state)
+  }
+
+  public moveBackwardsInHistory() {
+    this.rules.moveBackwardsInHistory(this.state, this.time)
+    this.renderer.render(this.state)
+  }
 }
 
 export const createBoard = (args: ConstructorParameters<typeof Board>) => new Board(...args)

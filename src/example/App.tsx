@@ -1,5 +1,5 @@
 import { createBoard } from '../package'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const practice = {
   plans: [
@@ -91,35 +91,43 @@ const practice = {
 
 const App = () => {
   const canvas = useRef<HTMLCanvasElement>(null)
+  const [board, setBoard] = useState<ReturnType<typeof createBoard> | null>(null)
 
   useEffect(() => {
     if (!canvas.current) {
       return
     }
 
-    createBoard([
-      canvas.current,
-      {
-        general: {
-          startAs: practice.plans[0]?.color,
+    setBoard(
+      createBoard([
+        canvas.current,
+        {
+          general: {
+            startAs: practice.plans[0]?.color,
+          },
+          rules: {
+            layout: practice.plans[0]?.layout,
+          },
+          renderer: {
+            figuresSpritePath: '/figures/sprite.svg',
+          },
+          time: {
+            followablePlan: practice.plans[0]?.followablePlan,
+            inevitablePlan: practice.plans[0]?.inevitablePlan,
+          },
         },
-        rules: {
-          layout: practice.plans[0]?.layout,
-        },
-        renderer: {
-          figuresSpritePath: '/figures/sprite.svg',
-        },
-        time: {
-          followablePlan: practice.plans[0]?.followablePlan,
-          inevitablePlan: practice.plans[0]?.inevitablePlan,
-        },
-      },
-    ])
+      ])
+    )
   }, [canvas])
 
   return (
     <div>
       <canvas ref={canvas} width={500} height={500} />
+
+      <div>
+        <button onClick={() => board.moveForwardsInHistory()}>Forward</button>
+        <button onClick={() => board.moveBackwardsInHistory()}>Backward</button>
+      </div>
     </div>
   )
 }

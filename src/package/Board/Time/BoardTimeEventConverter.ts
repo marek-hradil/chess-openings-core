@@ -22,7 +22,8 @@ class BoardTimeEventConverter {
         name: mainMove?.figure?.getName() ?? 'King',
         startingPosition: mainMove?.figure?.getStartingPosition() ?? 'a1',
       },
-      specials
+      specials,
+      events
     )
   }
 

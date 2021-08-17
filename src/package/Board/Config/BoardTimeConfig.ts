@@ -44,7 +44,8 @@ class BoardTimeConfig {
           new BoardTimeRecord(
             [record.from, record.to],
             { color: record.color, name: record.name, startingPosition: record.startingPosition },
-            record
+            record,
+            []
           )
       )
 

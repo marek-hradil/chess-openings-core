@@ -49,7 +49,7 @@ class BoardTime {
   }
 
   public isFollowingPlan(plannedMove: BoardTimeRecord) {
-    const followingMove = this.plan.getNextFollowingPlan(
+    const followingMove = this.plan.getNextFollowablePlan(
       plannedMove.color,
       this.history.getMoveCount()
     )
