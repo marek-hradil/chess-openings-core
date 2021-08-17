@@ -9,6 +9,7 @@ declare class BoardHistory {
         name?: FigureName;
         startingPosition?: string;
     }): BoardTimeRecord[];
+    getMove(historyShift: number): BoardTimeRecord | null;
     getLastMove(): BoardTimeRecord | null;
     getMoveCount(): number;
 }

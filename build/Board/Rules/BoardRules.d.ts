@@ -6,9 +6,12 @@ declare class BoardRules {
     private listeners;
     private switches;
     private data;
+    private historyShift;
     constructor(config: BoardRulesConfig);
     setup(state: BoardState): void;
     move(from: string, to: string, state: BoardState, time: BoardTime, rules: BoardRules): void;
+    moveForwardsInHistory(state: BoardState, time: BoardTime): void;
+    moveBackwardsInHistory(state: BoardState, time: BoardTime): void;
     /**
      * Determine where can figure on this field attack to
      */
@@ -22,5 +25,7 @@ declare class BoardRules {
      */
     isAttacked(state: BoardState, position: string, byColor: FigureColor): boolean;
     isCheckmate(state: BoardState, time: BoardTime, rules: BoardRules): boolean;
+    private applyEvents;
+    private deapplyEvents;
 }
 export default BoardRules;

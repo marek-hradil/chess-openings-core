@@ -6,6 +6,8 @@ declare class Board {
     private time;
     private renderer;
     constructor(canvas: HTMLCanvasElement, options?: BoardConfigOptions);
+    moveForwardsInHistory(): void;
+    moveBackwardsInHistory(): void;
 }
 export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: Readonly<Partial<{
     rules: (import("./Config/BoardEventListeners").BoardRulesEventsListeners & import("./Config/BoardSwitches").BoardRulesSwitches & Omit<import("./Config/BoardData").BoardRulesData, "layout"> & {
