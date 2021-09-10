@@ -13,8 +13,6 @@ class BoardRules {
   private switches: BoardSwitches
   private data: BoardData
 
-  private historyShift = 0
-
   constructor(config: BoardRulesConfig) {
     this.listeners = config.listeners
     this.switches = config.switches
@@ -27,7 +25,7 @@ class BoardRules {
     }
   }
 
-  public move(from: string, to: string, state: BoardState, time: BoardTime, rules: BoardRules) {
+  public move(from: string, to: string, state: BoardState, time: BoardTime) {
     const field = state.getFieldByNotation(from)
     const figure = field?.getFigure()
     if (!figure) {
@@ -37,8 +35,39 @@ class BoardRules {
     const movement = this.data.movements[figure.getName()]
     const events = movement.make(state, from, to)
 
-    const move = time.buildMove(events)
+    const sameFigures = state
+      .listFigures(figure.getName(), figure.getColor())
+      .filter(([position]) => position !== from)
+
+    const { disambiguateCol, disambiguateRow } = sameFigures.reduce<{
+      disambiguateCol: boolean
+      disambiguateRow: boolean
+    }>(
+      (acc, [position, sameFigure]) => {
+        const movement = this.data.movements[sameFigure.getName()]
+        const canMoveToSamePosition = movement
+          .canMoveTo(state, position, time.getHistory(), this)
+          .includes(to)
+
+        if (!canMoveToSamePosition) {
+          return acc
+        }
+
+        const disambiguateCol = acc.disambiguateCol || NotationConverter.isSameCol(position, to)
+        const disambiguateRow = acc.disambiguateRow || NotationConverter.isSameRow(position, to)
+
+        if (!disambiguateRow && !disambiguateCol) {
+          return { disambiguateCol: true, disambiguateRow: false }
+        }
+
+        return { disambiguateCol, disambiguateRow }
+      },
+      { disambiguateCol: false, disambiguateRow: false }
+    )
+
+    const move = time.buildMove(events, { disambiguateCol, disambiguateRow })
     const isByPlan = time.isFollowingPlan(move)
+
     if (!isByPlan && this.switches.shouldEndOnPlanViolation) {
       this.listeners.onEnd()
       return
@@ -52,38 +81,38 @@ class BoardRules {
     time.move(move)
     this.listeners.onMove(move, time.getHistory().list())
 
-    if (this.isCheckmate(state, time, rules)) {
+    if (this.isCheckmate(state, time)) {
       this.listeners.onEnd(time.getHistory().getLastMove()?.color ?? 'White')
       return
     }
 
     const nextPlan = time.getNextInevitable()
     if (nextPlan) {
-      this.move(nextPlan.fromPosition ?? '', nextPlan.toPosition ?? '', state, time, rules)
+      this.move(nextPlan.fromPosition ?? '', nextPlan.toPosition ?? '', state, time)
     }
   }
 
   public moveForwardsInHistory(state: BoardState, time: BoardTime) {
     const history = time.getHistory()
-    const move = history.getMove(this.historyShift)
+    const move = history.getMove(history.getShift())
 
     if (!move?.events?.length) {
       return
     }
 
-    this.historyShift += 1
+    history.setShift(1)
     this.applyEvents(state, move.events)
   }
 
   public moveBackwardsInHistory(state: BoardState, time: BoardTime) {
     const history = time.getHistory()
-    const move = history.getMove(this.historyShift - 1)
+    const move = history.getMove(history.getShift() - 1)
 
     if (!move?.events?.length) {
       return
     }
 
-    this.historyShift -= 1
+    history.setShift(-1)
     this.deapplyEvents(state, move.events)
   }
 
@@ -106,7 +135,7 @@ class BoardRules {
   /**
    * Determine where can figure on this field move to
    */
-  public getMovablesForField(from: string, state: BoardState, time: BoardTime, rules: BoardRules) {
+  public getMovablesForField(from: string, state: BoardState, time: BoardTime) {
     const field = state.getFieldByNotation(from)
     const figure = field?.getFigure()
     if (!figure) {
@@ -114,7 +143,7 @@ class BoardRules {
     }
 
     const movement = this.data.movements[figure.getName()]
-    const positions = movement.canMoveTo(state, from, time.getHistory(), rules)
+    const positions = movement.canMoveTo(state, from, time.getHistory(), this)
 
     const isFigureKing = figure.getName() === 'King'
     const kingPosition = isFigureKing ? from : state.findKing(figure.getColor())
@@ -179,7 +208,7 @@ class BoardRules {
     return isAttacked
   }
 
-  public isCheckmate(state: BoardState, time: BoardTime, rules: BoardRules) {
+  public isCheckmate(state: BoardState, time: BoardTime) {
     const lastMove = time.getHistory().getLastMove()
     if (!lastMove) {
       return false
@@ -194,7 +223,7 @@ class BoardRules {
     const isOppositeKingAttacked = this.isAttacked(state, oppositeKingPosition, color)
     if (
       isOppositeKingAttacked &&
-      this.getMovablesForField(oppositeKingPosition, state, time, rules).length === 0
+      this.getMovablesForField(oppositeKingPosition, state, time).length === 0
     ) {
       const fields = state.getFields()
       let moves = 0
@@ -204,7 +233,7 @@ class BoardRules {
           const notation = NotationConverter.toNotation(Number(rowIndex), Number(colIndex))
 
           if (notation && defender && defender.getColor() === color) {
-            moves += this.getMovablesForField(notation, state, time, rules).length
+            moves += this.getMovablesForField(notation, state, time).length
           }
         }
       }

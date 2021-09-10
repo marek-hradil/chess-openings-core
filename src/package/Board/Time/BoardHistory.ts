@@ -3,6 +3,7 @@ import BoardTimeRecord from './BoardTimeRecord'
 
 class BoardHistory {
   private moves: BoardTimeRecord[] = []
+  private shift = 0
 
   public pushMove(move: BoardTimeRecord) {
     this.moves.push(move)
@@ -10,6 +11,14 @@ class BoardHistory {
 
   public list() {
     return this.moves
+  }
+
+  public getShift() {
+    return this.shift
+  }
+
+  public setShift(moveBy: -1 | 1) {
+    this.shift += moveBy
   }
 
   public filter({

@@ -1,5 +1,5 @@
 import { BlackField, Field, FieldState, WhiteField } from './BoardField'
-import { FigureColor } from '../../Figure/Figure'
+import { Figure, FigureColor, FigureName } from '../../Figure/Figure'
 import { NotationConverter } from '../../Converters'
 import BoardStateConfig from '../Config/BoardStateConfig'
 
@@ -38,6 +38,23 @@ class BoardState {
 
   public findKing(color: FigureColor) {
     return BoardStateFigureSearch.findKing(this.fields, color)
+  }
+
+  public listFigures(name: FigureName, color: FigureColor) {
+    return this.fields.reduce<[position: string, figure: Figure][]>((acc, row, rowIndex) => {
+      const figures = row.reduce<[position: string, figure: Figure][]>((acc, field, colIndex) => {
+        const figure = field.getFigure()
+        const position = NotationConverter.toNotation(rowIndex, colIndex) ?? ''
+
+        if (name === figure?.getName() && color === figure?.getColor()) {
+          return [...acc, [position, figure]]
+        }
+
+        return acc
+      }, [])
+
+      return [...acc, ...figures]
+    }, [])
   }
 }
 

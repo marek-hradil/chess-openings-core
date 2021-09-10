@@ -23,6 +23,20 @@ export class NotationConverter {
 
     return [this.rowNotation.indexOf(rowSign), this.colNotation.indexOf(colSign)]
   }
+
+  public static isSameRow(position1: string, position2: string) {
+    const [rowIndex1] = NotationConverter.fromNotation(position1)
+    const [rowIndex2] = NotationConverter.fromNotation(position2)
+
+    return rowIndex1 === rowIndex2
+  }
+
+  public static isSameCol(position1: string, position2: string) {
+    const [, colIndex1] = NotationConverter.fromNotation(position1)
+    const [, colIndex2] = NotationConverter.fromNotation(position2)
+
+    return colIndex1 === colIndex2
+  }
 }
 
 export class LengthConverter {

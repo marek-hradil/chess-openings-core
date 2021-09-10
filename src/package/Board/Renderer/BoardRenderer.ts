@@ -39,9 +39,9 @@ export class BoardRenderer {
     for (const rowIndex in fields) {
       const row = fields[rowIndex]
       for (const colIndex in row) {
-        const cell = row[Number(colIndex)]
-        const color = cell?.getColor()
-        const figure = cell?.getFigure()
+        const field = row[Number(colIndex)]
+        const color = field?.getColor()
+        const figure = field?.getFigure()
 
         if (color) {
           this.context.fillStyle = color

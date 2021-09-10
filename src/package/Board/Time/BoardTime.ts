@@ -26,8 +26,11 @@ class BoardTime {
     return this.history
   }
 
-  public buildMove(events: MoveEvent[]) {
-    return BoardTimeEventConverter.convertMoveEventsToRecord(events)
+  public buildMove(
+    events: MoveEvent[],
+    details: Parameters<typeof BoardTimeEventConverter.convertMoveEventsToRecord>[1]
+  ) {
+    return BoardTimeEventConverter.convertMoveEventsToRecord(events, details)
   }
 
   public move(move: BoardTimeRecord) {

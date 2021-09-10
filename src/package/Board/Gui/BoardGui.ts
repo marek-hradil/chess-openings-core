@@ -34,6 +34,11 @@ class BoardGui {
       return
     }
 
+    const history = time.getHistory()
+    if (history.getShift() !== 0) {
+      return
+    }
+
     const field = state.getFieldByNotation(notation)
 
     switch (field?.getState()) {
@@ -59,7 +64,7 @@ class BoardGui {
     const start = state.getFieldByNotation(position)
     start?.setState(FieldState.Selected)
 
-    const movablePositions = rules.getMovablesForField(position, state, time, rules)
+    const movablePositions = rules.getMovablesForField(position, state, time)
 
     for (const movable of movablePositions) {
       const field = state.getFieldByNotation(movable)
@@ -89,7 +94,7 @@ class BoardGui {
       return
     }
 
-    rules.move(selected, position, state, time, rules)
+    rules.move(selected, position, state, time)
     this.clear(state)
   }
 

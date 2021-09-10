@@ -23,6 +23,7 @@ class BoardRulesConfig {
     this.listeners = new BoardEventListeners({
       type: 'BoardRules',
       onEnd: options?.onEnd,
+      onMove: options?.onMove,
     })
 
     this.switches = new BoardSwitches({

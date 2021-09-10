@@ -3,12 +3,17 @@ import { NotationConverter } from '../../Converters'
 import BoardTimeRecord from './BoardTimeRecord'
 
 class BoardTimeEventConverter {
-  public static convertMoveEventsToRecord(events: MoveEvent[]) {
+  public static convertMoveEventsToRecord(
+    events: MoveEvent[],
+    details: { disambiguateCol: boolean; disambiguateRow: boolean }
+  ) {
     const specials = {
       capture: this.isCapture(events),
       pawnEnPassant: this.isEnPassant(events),
       pawnLongMove: this.isPawnLongMove(events),
       promotion: this.getPromotedFigure(events),
+      disambiguateRow: details.disambiguateRow,
+      disambiguateCol: details.disambiguateCol,
 
       ...this.isCastle(events),
     }
