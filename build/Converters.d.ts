@@ -4,6 +4,8 @@ export declare class NotationConverter {
     private static colNotation;
     static toNotation(rowIndex: number, colIndex: number): string | null;
     static fromNotation(notation: string): [rowIndex: number, colIndex: number];
+    static isSameRow(position1: string, position2: string): boolean;
+    static isSameCol(position1: string, position2: string): boolean;
 }
 export declare class LengthConverter {
     static measureLengthOfMove(from: string, to: string): number;

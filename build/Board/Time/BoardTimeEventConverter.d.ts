@@ -1,7 +1,10 @@
 import { MoveEvent } from '../Rules/MovementRule';
 import BoardTimeRecord from './BoardTimeRecord';
 declare class BoardTimeEventConverter {
-    static convertMoveEventsToRecord(events: MoveEvent[]): BoardTimeRecord;
+    static convertMoveEventsToRecord(events: MoveEvent[], details: {
+        disambiguateCol: boolean;
+        disambiguateRow: boolean;
+    }): BoardTimeRecord;
     private static isCapture;
     private static getPromotedFigure;
     private static isCastle;

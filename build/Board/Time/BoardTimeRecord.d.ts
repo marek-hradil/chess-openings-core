@@ -13,6 +13,8 @@ declare class BoardTimeRecord {
         castleLong: boolean;
         castleShort: boolean;
         promotion: FigureName | null;
+        disambiguateRow: boolean;
+        disambiguateCol: boolean;
     };
     readonly events: MoveEvent[];
     constructor(positions: [from: string | null, to: string | null], figure: {
@@ -21,5 +23,8 @@ declare class BoardTimeRecord {
         startingPosition: string;
     }, specials: Partial<BoardTimeRecord['specials']>, events: MoveEvent[]);
     equals(record: BoardTimeRecord): boolean;
+    serialize(): string;
+    private buildFigureSign;
+    private buildFromSign;
 }
 export default BoardTimeRecord;

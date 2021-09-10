@@ -34,6 +34,8 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: R
                 castleLong: boolean;
                 castleShort: boolean;
                 promotion: import("../Figure/Figure").FigureName | null;
+                disambiguateRow: boolean;
+                disambiguateCol: boolean;
             }>)[];
             Black: ({
                 from: string | null;
@@ -49,6 +51,8 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: R
                 castleLong: boolean;
                 castleShort: boolean;
                 promotion: import("../Figure/Figure").FigureName | null;
+                disambiguateRow: boolean;
+                disambiguateCol: boolean;
             }>)[];
         } | undefined;
         followablePlan?: {
@@ -66,6 +70,8 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: R
                 castleLong: boolean;
                 castleShort: boolean;
                 promotion: import("../Figure/Figure").FigureName | null;
+                disambiguateRow: boolean;
+                disambiguateCol: boolean;
             }>)[];
             Black: ({
                 from: string | null;
@@ -81,6 +87,8 @@ export declare const createBoard: (args: [canvas: HTMLCanvasElement, options?: R
                 castleLong: boolean;
                 castleShort: boolean;
                 promotion: import("../Figure/Figure").FigureName | null;
+                disambiguateRow: boolean;
+                disambiguateCol: boolean;
             }>)[];
         } | undefined;
     } & import("./Config/BoardEventListeners").BoardTimeEventsListeners & import("./Config/BoardData").BoardGeneralData) | undefined;
